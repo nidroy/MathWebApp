@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h3 style="margin-bottom: 15px;">Главная страница</h3>
+
+<table border="1">
+    <tr>
+        <th>Выбор таблицы</th>
+    </tr>
+    <tr>
+        <td style="text-align: center;">
+            <div style="display: flex; gap: 15px;">
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Products")'">Справочник товаров</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Counterparties")'">Справочник контрагентов</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "DocumentHeaders")'">Шапки документов</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "DocumentLines")'">Спецификации (строчки) документов</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "ProductStocks")'">Остатки товара на складе</button>
+            </div>
+        </td>
+    </tr>
+</table>

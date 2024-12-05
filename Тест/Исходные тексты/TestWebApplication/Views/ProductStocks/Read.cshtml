@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Read Product Stock Page";
+}
+
+@model product_stock
+
+<h3 style="margin-bottom: 15px;">Остаток товара на складе</h3>
+
+<table border="1">
+    <tr>
+        <td>Ссылка на справочник товара</td>
+        <td>
+            @Html.ActionLink(
+                     linkText: @Model.product.name,
+                     actionName: "Read",
+                     controllerName: "Products",
+                     routeValues: new { id = @Model.product_id },
+                     htmlAttributes: new { @class = "btn btn-link" }
+                     )
+        </td>
+    </tr>
+    <tr>
+        <td>Фактическое количество</td>
+        <td>@Model.actual_quantity</td>
+    </tr>
+    <tr>
+        <td>Количество в резерве</td>
+        <td>@Model.reserved_quantity</td>
+    </tr>
+</table>

@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Product Stocks Page";
+}
+
+@model IEnumerable<product_stock>
+
+<h2 style="margin-bottom: 15px;">Остатки товаров на складе</h2>
+
+<table border="1">
+    <tr>
+        <th>Ссылка на справочник товара</th>
+        <th>Фактическое количество</th>
+        <th>Количество в резерве</th>
+        <th>Операции</th>
+    </tr>
+    @foreach (var product_stock in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(
+                         linkText: product_stock.product.name,
+                         actionName: "Read",
+                         controllerName: "Products",
+                         routeValues: new { id = product_stock.product_id },
+                         htmlAttributes: new { @class = "btn btn-link" }
+                         )
+            </td>
+            <td>@product_stock.actual_quantity</td>
+            <td>@product_stock.reserved_quantity</td>
+            <td style="text-align: center;">
+                <div style="display: flex; gap: 15px;">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Read", "ProductStocks", new { id = product_stock.id })'">Открыть</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Update", "ProductStocks", new { id = product_stock.id })'">Изменить</button>
+                    <form asp-controller="ProductStocks" asp-action="Delete" asp-route-id="@product_stock.id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этот остаток товара на складе?');">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="margin-top: 15px;">
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "ProductStocks")'">Добавить</button>
+</p>

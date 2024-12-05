@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Read Product Page";
+}
+
+@model product
+
+<h3 style="margin-bottom: 15px;">Справочник товара</h3>
+
+<table border="1">
+    <tr>
+        <td>Наименование товара</td>
+        <td>@Model.name</td>
+    </tr>
+    <tr>
+        <td>Цена</td>
+        <td>@Model.price</td>
+    </tr>
+</table>

@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Counterparties Page";
+}
+
+@model IEnumerable<counterparty>
+
+<h2 style="margin-bottom: 15px;">Справочники контрагентов</h2>
+
+<table border="1">
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Телефон</th>
+        <th>Электронная почта</th>
+        <th>Операции</th>
+    </tr>
+    @foreach (var counterparty in Model)
+    {
+        <tr>
+            <td>@counterparty.first_name</td>
+            <td>@counterparty.last_name</td>
+            <td>@counterparty.phone</td>
+            <td>@counterparty.email</td>
+            <td style="text-align: center;">
+                <div style="display: flex; gap: 15px;">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Read", "Counterparties", new { id = counterparty.id })'">Открыть</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Update", "Counterparties", new { id = counterparty.id })'">Изменить</button>
+                    <form asp-controller="Counterparties" asp-action="Delete" asp-route-id="@counterparty.id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этот справочник контрагента?');">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="margin-top: 15px;">
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Counterparties")'">Добавить</button>
+</p>
+

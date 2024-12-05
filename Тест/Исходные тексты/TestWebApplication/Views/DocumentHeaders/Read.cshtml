@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Read Document Header Page";
+}
+
+@model document_header
+
+<h3 style="margin-bottom: 15px;">Шапка документа</h3>
+
+<table border="1">
+    <tr>
+        <td>Номер документа</td>
+        <td>@Model.document_number</td>
+    </tr>
+    <tr>
+        <td>Ссылка на справочник контрагента</td>
+        <td>
+            @Html.ActionLink(
+                     linkText: String.Format("{0} {1}", @Model.counterparty.last_name, @Model.counterparty.first_name),
+                     actionName: "Read",
+                     controllerName: "Counterparties",
+                     routeValues: new { id = @Model.counterparty_id },
+                     htmlAttributes: new { @class = "btn btn-link" }
+                     )
+        </td>
+    </tr>
+    <tr>
+        <td>Дата документа</td>
+        <td>@Model.document_date.ToString("dd.MM.yyyy")</td>
+    </tr>
+    <tr>
+        <td>Сумма документа</td>
+        <td>@Model.document_amount</td>
+    </tr>
+    <tr>
+        <td>Тип документа</td>
+        <td>@Model.document_type</td>
+    </tr>
+    <tr>
+        <td>Состояние документа</td>
+        <td>@Model.document_status</td>
+    </tr>
+</table>
+
+<p style="margin-top: 15px;">
+    <div style="display: flex; gap: 15px;">
+        @if (Model.document_type == "Приход" && Model.document_status != "Оприходовано")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("ReceiveDocument", "DocumentHeaders", new { id = @Model.id })'">Приходование</button>
+        }
+        @if (Model.document_type == "Приход" && Model.document_status == "Оприходовано")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("CancelReceivingDocument", "DocumentHeaders", new { id = @Model.id })'">Отмена прихода</button>
+        }
+        @if (Model.document_type == "Резерв")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("ReserveDocument", "DocumentHeaders", new { id = @Model.id })'">Резервирование</button>
+        }
+        @if (Model.document_type == "Резерв" && Model.document_status == "Зарезервировано")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("CancelReservingDocument", "DocumentHeaders", new { id = @Model.id })'">Отмена резервирования</button>
+        }
+        @if (Model.document_type == "Расход" && Model.document_status != "Списано")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("WriteOffDocument", "DocumentHeaders", new { id = @Model.id })'">Списание</button>
+        }
+        @if (Model.document_type == "Расход" && Model.document_status == "Списано")
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("CancelWritingOffDocument", "DocumentHeaders", new { id = @Model.id })'">Отмена списания</button>
+        }
+    </div>
+</p>

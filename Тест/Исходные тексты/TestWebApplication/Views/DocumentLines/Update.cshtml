@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Update Document Line Page";
+}
+
+@model document_line_view_model
+
+<h3 style="margin-bottom: 15px;">Изменить спецификацию (строчку) документа</h3>
+
+<form asp-controller="DocumentLines" asp-action="Update" method="post">
+    <input asp-for="document_line.id" type="hidden" />
+
+    <table border="1">
+        <tr>
+            <td><label asp-for="document_line.document_header_id">Ссылка на шапку документа</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="document_line.document_header_id" class="form-control" style="overflow-y: auto;">
+                        @foreach (var document_header in Model.document_headers)
+                        {
+                            <option value="@document_header.id">@document_header.document_number</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_line.product_id">Ссылка на справочник товара</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="document_line.product_id" class="form-control" style="overflow-y: auto;">
+                        @foreach (var product in Model.products)
+                        {
+                            <option value="@product.id">@product.name</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_line.quantity">Количество</label></td>
+            <td><input asp-for="document_line.quantity" class="form-control" type="number" step="1" min="0" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_line.reserved_quantity">Количество в резерве</label></td>
+            <td><input asp-for="document_line.reserved_quantity" class="form-control" type="number" step="1" min="0" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_line.price">Цена</label></td>
+            <td><input asp-for="document_line.price" class="form-control" min="0" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_line.discount">Скидка (%)</label></td>
+            <td><input asp-for="document_line.discount" class="form-control" type="number" step="1" min="0" max="100" /></td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success" onclick="replacePoints()">Сохранить</button>
+    </div>
+</form>
+
+<script>
+    function replacePoints() {
+        var price = document.getElementById("price");
+        price.value = price.value.replace(/\./g, ',');
+        document.getElementById("myForm").submit();
+    }
+</script>

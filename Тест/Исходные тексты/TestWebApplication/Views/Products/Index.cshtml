@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Products Page";
+}
+
+@model IEnumerable<product>
+
+<h2 style="margin-bottom: 15px;">Справочники товаров</h2>
+
+<table border="1">
+    <tr>
+        <th>Наименование товара</th>
+        <th>Цена</th>
+        <th>Операции</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.name</td>
+            <td>@product.price</td>
+            <td style="text-align: center;">
+                <div style="display: flex; gap: 15px;">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Read", "Products", new { id = product.id })'">Открыть</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Update", "Products", new { id = product.id })'">Изменить</button>
+                    <form asp-controller="Products" asp-action="Delete" asp-route-id="@product.id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этот справочник товара?');">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="margin-top: 15px;">
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Products")'">Добавить</button>
+</p>

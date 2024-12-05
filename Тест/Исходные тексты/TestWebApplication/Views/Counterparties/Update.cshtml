@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Update Counterparty Page";
+}
+
+@model counterparty
+
+<h3 style="margin-bottom: 15px;">Изменить справочник контрагента</h3>
+
+<form asp-controller="Counterparties" asp-action="Update" method="post">
+    <input asp-for="id" type="hidden" />
+
+    <table border="1">
+        <tr>
+            <td><label asp-for="first_name">Имя</label></td>
+            <td><input asp-for="first_name" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="last_name">Фамилия</label></td>
+            <td><input asp-for="last_name" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="phone">Телефон</label></td>
+            <td><input asp-for="phone" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="email">Электронная почта</label></td>
+            <td><input asp-for="email" class="form-control" /></td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Create Product Page";
+}
+
+@model product
+
+<h3 style="margin-bottom: 15px;">Добавить новый справочник товара</h3>
+
+<form asp-controller="Products" asp-action="Create" method="post">
+    <table border="1">
+        <tr>
+            <td><label asp-for="name">Наименование товара</label></td>
+            <td><input asp-for="name" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="price">Цена</label></td>
+            <td><input asp-for="price" class="form-control" min="0" /></td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success" onclick="replacePoints()">Добавить</button>
+    </div>
+</form>
+
+<script>
+    function replacePoints() {
+        var price = document.getElementById("price");
+        price.value = price.value.replace(/\./g, ',');
+        document.getElementById("myForm").submit();
+    }
+</script>

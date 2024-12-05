@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Document Lines Page";
+}
+
+@model IEnumerable<document_line>
+
+<h2 style="margin-bottom: 15px;">Спецификации (строчки) документов</h2>
+
+<table border="1">
+    <tr>
+        <th>Ссылка на шапку документа</th>
+        <th>Ссылка на справочник товара</th>
+        <th>Количество</th>
+        <th>Количество в резерве</th>
+        <th>Цена</th>
+        <th>Скидка (%)</th>
+        <th>Операции</th>
+    </tr>
+    @foreach (var document_line in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(
+                         linkText: document_line.document_header.document_number,
+                         actionName: "Read",
+                         controllerName: "DocumentHeaders",
+                         routeValues: new { id = document_line.document_header_id },
+                         htmlAttributes: new { @class = "btn btn-link" }
+                         )
+            </td>
+            <td>
+                @Html.ActionLink(
+                         linkText: document_line.product.name,
+                         actionName: "Read",
+                         controllerName: "Products",
+                         routeValues: new { id = document_line.product_id },
+                         htmlAttributes: new { @class = "btn btn-link" }
+                         )
+            </td>
+            <td>@document_line.quantity</td>
+            <td>@document_line.reserved_quantity</td>
+            <td>@document_line.price</td>
+            <td>@document_line.discount</td>
+            <td style="text-align: center;">
+                <div style="display: flex; gap: 15px;">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Read", "DocumentLines", new { id = document_line.id })'">Открыть</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Update", "DocumentLines", new { id = document_line.id })'">Изменить</button>
+                    <form asp-controller="DocumentLines" asp-action="Delete" asp-route-id="@document_line.id" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту спецификацию (строчку) документа?');">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<p style="margin-top: 15px;">
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "DocumentLines")'">Добавить</button>
+</p>
+

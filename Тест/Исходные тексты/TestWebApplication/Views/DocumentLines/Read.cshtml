@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Read Document Line Page";
+}
+
+@model document_line
+
+<h3 style="margin-bottom: 15px;">Спецификация (строчка) документа</h3>
+
+<table border="1">
+    <tr>
+        <td>Ссылка на шапку документа</td>
+        <td>
+            @Html.ActionLink(
+                     linkText: @Model.document_header.document_number,
+                     actionName: "Read",
+                     controllerName: "DocumentHeaders",
+                     routeValues: new { id = @Model.document_header_id },
+                     htmlAttributes: new { @class = "btn btn-link" }
+                     )
+        </td>
+    </tr>
+    <tr>
+        <td>Ссылка на справочник товара</td>
+        <td>
+            @Html.ActionLink(
+                     linkText: @Model.product.name,
+                     actionName: "Read",
+                     controllerName: "Products",
+                     routeValues: new { id = @Model.product_id },
+                     htmlAttributes: new { @class = "btn btn-link" }
+                     )
+        </td>
+    </tr>
+    <tr>
+        <td>Количество</td>
+        <td>@Model.quantity</td>
+    </tr>
+    <tr>
+        <td>Количество в резерве</td>
+        <td>@Model.reserved_quantity</td>
+    </tr>
+    <tr>
+        <td>Цена</td>
+        <td>@Model.price</td>
+    </tr>
+    <tr>
+        <td>Скидка (%)</td>
+        <td>@Model.discount</td>
+    </tr>
+</table>

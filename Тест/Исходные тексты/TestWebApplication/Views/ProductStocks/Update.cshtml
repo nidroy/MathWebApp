@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Update Product Stock Page";
+}
+
+@model product_stock_view_model
+
+<h3 style="margin-bottom: 15px;">Изменить остаток товара на складе</h3>
+
+<form asp-controller="ProductStocks" asp-action="Update" method="post">
+    <input asp-for="product_stock.id" type="hidden" />
+
+    <table border="1">
+        <tr>
+            <td><label asp-for="product_stock.product_id">Ссылка на справочник товара</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="product_stock.product_id" class="form-control" style="overflow-y: auto;">
+                        @foreach (var product in Model.products)
+                        {
+                            <option value="@product.id">@product.name</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="product_stock.actual_quantity">Фактическое количество</label></td>
+            <td><input asp-for="product_stock.actual_quantity" class="form-control" type="number" step="1" min="0" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="product_stock.reserved_quantity">Количество в резерве</label></td>
+            <td><input asp-for="product_stock.reserved_quantity" class="form-control" type="number" step="1" min="0" /></td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success" >Сохранить</button>
+    </div>
+</form>
+

@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Update Document Header Page";
+}
+
+@model document_header_view_model
+
+<h3 style="margin-bottom: 15px;">Изменить шапку документа</h3>
+
+<form asp-controller="DocumentHeaders" asp-action="Update" method="post">
+    <input asp-for="document_header.id" type="hidden" />
+
+    <table border="1">
+        <tr>
+            <td><label asp-for="document_header.document_number">Номер документа</label></td>
+            <td><input asp-for="document_header.document_number" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_header.counterparty_id">Ссылка на справочник контрагента</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="document_header.counterparty_id" class="form-control" style="overflow-y: auto;">
+                        @foreach (var counterparty in Model.counterparties)
+                        {
+                            <option value="@counterparty.id">@counterparty.last_name @counterparty.first_name</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_header.document_date">Дата документа</label></td>
+            <td><input asp-for="document_header.document_date" class="form-control" type="date" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_header.document_type">Тип документа</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="document_header.document_type" class="form-control" style="overflow-y: auto;">
+                        @foreach (var type in Model.document_types)
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="document_header.document_status">Состояние документа</label></td>
+            <td>
+                <div class="select-wrapper">
+                    <select asp-for="document_header.document_status" class="form-control" style="overflow-y: auto;">
+                        @foreach (var status in Model.document_statuses)
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                    <div class="arrow-down">&#9660;</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </div>
+</form>
